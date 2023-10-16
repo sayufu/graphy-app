@@ -2,3 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+        font-family: Helvetica, system-ui, sans-serif;
+    }
+}
+
+@layer components {
+    .btn-fill {
+        @apply bg-primary py-2 px-8 rounded-full;
+        @apply hover:cursor-pointer duration-200;
+        @apply font-semibold text-white text-lg;
+    }
+    .btn-outline {
+        @apply py-2 px-8 rounded-full border-black;
+        @apply hover:text-primary hover:border-primary hover:cursor-pointer duration-200;
+        @apply text-lg border font-semibold;
+    }
+}
