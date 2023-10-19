@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "papaparse": "^5.4.1",
     "pinia": "^2.1.7",
     "primevue": "^3.36.0",
     "vue": "^3.2.47",

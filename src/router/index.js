@@ -1,5 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import HomeComponent from "../home/pages/home.component.vue";
+import LoginComponent from "../authentication/pages/login.component.vue";
+import ProductsComponent from "../store/pages/products.component.vue";
 
 // Pages
 
@@ -7,7 +9,8 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/home', name: 'Home', component: HomeComponent, meta: { requiresAuth: true }},
-    //{ path: '/login', name: 'Log In', component: Login, meta: { requiresAuth: false }},
+    { path: '/login', name: 'Log In', component: LoginComponent, meta: { requiresAuth: false }},
+    { path: '/products', name: 'Products', component: ProductsComponent, meta: { requiresAuth: true }},
     { path: '/', redirect: '/home'},
   ]
 });
