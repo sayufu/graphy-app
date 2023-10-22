@@ -1,47 +1,62 @@
 <script>
 import Papa from 'papaparse';
-import ProductComponent from "../components/product.component.vue";
+import ProductCard from "../components/product-card.component.vue";
+import {CsvReadingService} from "../../shared/service/csv-reading.service.js";
+import LoadingSpinner from "../../shared/components/LoadingSpinner.component.vue";
 
 export default {
   name: 'ProductsComponent',
   components: {
-    ProductComponent,
+    ProductCard, LoadingSpinner
   },
   data() {
     return {
-      products: []
+      products: [],
+      currentPage: 1,
+      itemsPerPage: 12,
+      csvReader: new CsvReadingService()
     };
   },
   created() {
-    this.loadCSVData();
+    this.csvReader.readCsvFile('src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
+      this.products = this.shuffleArray(data);
+    });
   },
   methods: {
-    loadCSVData() {
-      // Adjust the path to your CSV file
-      const csvFilePath = 'src/script/data/GRAPHY_PRODUCTS.csv';
+    shuffleArray(products) {
+      for (let i = products.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [products[i], products[j]] = [products[j], products[i]];
+      }
+      return products;
+    },
 
-      Papa.parse(csvFilePath, {
-        download: true, // Set to true for local file paths
-        header: true,
-        dynamicTyping: true, // Convert numeric data to numbers
-        skipEmptyLines: true,
-        complete: (result) => {
-          this.products = result.data;
-        },
-        error: (error) => {
-          console.error('CSV parsing error:', error);
-        },
-      });
+    calculateCurrentPageItems() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.products.slice(startIndex, endIndex);
     },
   },
 };
 </script>
 
 <template>
-  <div>
-    <product-component v-for="product in products" :key="product.id" :product="product" />
+  <div class="container mx-auto">
+    <div v-if="products">
+      <div class="flex flex-col items-center gap-8 py-8">
+        <div class="flex flex-wrap justify-center -mx-4 gap-10">
+          <ProductCard v-for="product in calculateCurrentPageItems()" :product="product" :key="product.id" />
+        </div>
+        <div class="flex gap-4">
+          <Button @click="currentPage -= 1" :disabled="currentPage === 1" icon="pi pi-angle-left" outlined severity="info" />
+          <Button @click="currentPage += 1" :disabled="currentPage === Math.ceil(products.length / itemsPerPage)" icon="pi pi-angle-right" outlined severity="info" />
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <LoadingSpinner />
+    </div>
   </div>
 </template>
-
 <style scoped>
 </style>

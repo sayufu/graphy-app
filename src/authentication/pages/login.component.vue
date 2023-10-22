@@ -2,6 +2,7 @@
 export default {
   name: 'LoginComponent',
   components: {}
+
 };
 </script>
 
@@ -23,7 +24,7 @@ export default {
         </div>
       </div>
       <div class="grid gap-2">
-        <router-link to="/"><button class="btn-fill py-4">Sign in</button></router-link>
+        <router-link to="/products"><button class="btn-fill py-4">Sign in</button></router-link>
         <p>Check some credentials to try out the application here</p>
       </div>
     </div>

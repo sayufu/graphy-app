@@ -18,10 +18,15 @@ import Toast from "primevue/toast";
 const pinia = createPinia();
 
 // Components
-import InlineMessage from 'primevue/inlinemessage'
-import InputText from 'primevue/inputtext'
-import Button from "primevue/button"
+import InlineMessage from 'primevue/inlinemessage';
+import InputText from 'primevue/inputtext';
+import Button from "primevue/button";
 import Password from 'primevue/password';
+import DataView from 'primevue/dataview';
+import Paginator from 'primevue/paginator';
+import Dropdown from 'primevue/dropdown';
+import ProgressSpinner from 'primevue/progressspinner';
+import Tag from 'primevue/tag';
 
 createApp(App)
     .use(PrimeVue, { ripple: true })
@@ -32,4 +37,9 @@ createApp(App)
     .component('InlineMessage', InlineMessage)
     .component('InputText', InputText)
     .component('Password', Password)
+    .component('DataView', DataView)
+    .component('Paginator', Paginator)
+    .component('Dropdown', Dropdown)
+    .component('ProgressSpinner', ProgressSpinner)
+    .component('Tag', Tag)
     .mount('#app')
