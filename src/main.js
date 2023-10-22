@@ -10,11 +10,11 @@ import PrimeVue from "primevue/config"
 import 'primevue/resources/themes/soho-light/theme.css'
 import 'primeicons/primeicons.css';
 
-import {createPinia} from "pinia"
 import ToastService from "primevue/toastservice"
-import Toast from "primevue/toast";
+import Toast from 'primevue/toast';
 
 // Pinia
+import {createPinia} from "pinia"
 const pinia = createPinia();
 
 // Components

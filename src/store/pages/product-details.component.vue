@@ -1,5 +1,5 @@
 <script>
-import {CsvReadingService} from "../../shared/service/csv-reading.service.js";
+import {CsvReadingService} from "../../shared/services/csv-reading.service.js";
 import ProductCard from "../components/product-card.component.vue";
 import LoadingSpinner from "../../shared/components/LoadingSpinner.component.vue";
 
@@ -56,11 +56,15 @@ export default {
                     :loading="loading" @click="load" />
           </div>
         </div>
-        <div>
-          <h1 class="text-2xl font-bold">Recommended products</h1>
+        <div class="grid gap-2 px-2 py-2">
+          <h1 class="text-2xl font-bold text-primary">Details</h1>
+          <p class="text-justify">{{product.description}}</p>
         </div>
-        <div>
-          <h1 class="text-2xl font-bold">Recommended by {{ product.brand }}</h1>
+        <div class="grid gap-2 px-2 py-2">
+          <h1 class="text-2xl font-bold text-primary">Recommended products</h1>
+        </div>
+        <div class="grid gap-2 px-2 py-2">
+          <h1 class="text-2xl font-bold text-primary">Recommended by {{ product.brand }}</h1>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <script>
 import Papa from 'papaparse';
 import ProductCard from "../components/product-card.component.vue";
-import {CsvReadingService} from "../../shared/service/csv-reading.service.js";
+import {CsvReadingService} from "../../shared/services/csv-reading.service.js";
 import LoadingSpinner from "../../shared/components/LoadingSpinner.component.vue";
 
 export default {
