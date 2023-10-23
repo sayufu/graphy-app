@@ -4,6 +4,7 @@ import LoginComponent from "../authentication/pages/login.component.vue";
 import ProductsComponent from "../store/pages/products.component.vue";
 import ProductDetails from "../store/pages/product-details.component.vue";
 import {useUserStore} from "../authentication/services/user-store.store.js";
+import PurchasesComponent from "../store/pages/purchases.component.vue";
 
 // Pages
 
@@ -14,6 +15,7 @@ const router = createRouter({
     { path: '/login', name: 'Log In', component: LoginComponent, meta: { requiresAuth: false }},
     { path: '/products', name: 'Products', component: ProductsComponent, meta: { requiresAuth: true }},
     { path: '/products/:id', name: 'Product', component: ProductDetails, meta: { requiresAuth: true }},
+    { path: '/purchases', name: 'Purchases', component: PurchasesComponent, meta: { requiresAuth: true }},
     //{ path: '/:notFound(.*)', redirect: '/home'},
     {
       path: '/',

@@ -27,6 +27,8 @@ import Paginator from 'primevue/paginator';
 import Dropdown from 'primevue/dropdown';
 import ProgressSpinner from 'primevue/progressspinner';
 import Tag from 'primevue/tag';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 createApp(App)
     .use(PrimeVue, { ripple: true })
@@ -40,6 +42,9 @@ createApp(App)
     .component('DataView', DataView)
     .component('Paginator', Paginator)
     .component('Dropdown', Dropdown)
+    .component('DataTable', DataTable)
+    .component('Column', Column)
+    .component('Toast', Toast)
     .component('ProgressSpinner', ProgressSpinner)
     .component('Tag', Tag)
     .mount('#app')
