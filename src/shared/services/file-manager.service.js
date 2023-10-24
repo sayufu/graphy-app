@@ -1,6 +1,6 @@
 import Papa from "papaparse";
 
-export class CsvReadingService {
+export class FileManagerService {
     constructor() {
         this.csvData = [];
     }
@@ -24,6 +24,35 @@ export class CsvReadingService {
                     },
                 });
             });
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    async writeTxtFile(data, txtFilePath) {
+        try {
+            const fileWriter = new FileWriter();
+            fileWriter.createNewFile(txtFilePath);
+
+            const txtData = data.join('\n');
+
+            fileWriter.write(txtData);
+
+            fileWriter.close();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    async readTxtFile(txtFilePath) {
+        try {
+            const fileReader = new FileReader();
+            fileReader.readAsText(new File([txtFilePath]));
+
+            const txtData = await fileReader.readAsText();
+
+            const arrayData = txtData.split('\n').slice(0, x);
+
+            return arrayData;
         } catch (error) {
             return Promise.reject(error);
         }

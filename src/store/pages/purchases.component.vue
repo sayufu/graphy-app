@@ -1,6 +1,6 @@
 <script>
-import LoadingSpinner from "../../shared/components/LoadingSpinner.component.vue";
-import {CsvReadingService} from "../../shared/services/csv-reading.service.js";
+import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
+import {FileManagerService} from "../../shared/services/file-manager.service.js";
 
 export default {
   name: 'PurchasesComponent',
@@ -12,17 +12,17 @@ export default {
       purchases: null,
       products: null,
       users:null,
-      csvReader: new CsvReadingService()
+      fileManager: new FileManagerService()
     };
   },
   created() {
-    this.csvReader.readCsvFile('../src/shared/data/GRAPHY_PURCHASES.csv').then((data) => {
+    this.fileManager.readCsvFile('../src/shared/data/GRAPHY_PURCHASES.csv').then((data) => {
       this.purchases = data;
     });
-    this.csvReader.readCsvFile('../src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
+    this.fileManager.readCsvFile('../src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
       this.products = data;
     });
-    this.csvReader.readCsvFile('../src/shared/data/USER_DATA.csv').then((data) => {
+    this.fileManager.readCsvFile('../src/shared/data/USER_DATA.csv').then((data) => {
       this.users = data;
     });
   },

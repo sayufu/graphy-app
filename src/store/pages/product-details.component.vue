@@ -1,7 +1,7 @@
 <script>
-import {CsvReadingService} from "../../shared/services/csv-reading.service.js";
+import {FileManagerService} from "../../shared/services/file-manager.service.js";
 import ProductCard from "../components/product-card.component.vue";
-import LoadingSpinner from "../../shared/components/LoadingSpinner.component.vue";
+import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
 
 export default {
   name: 'ProductDetails',
@@ -9,12 +9,12 @@ export default {
   data() {
     return {
       products: [],
-      csvReader: new CsvReadingService(),
+      fileManager: new FileManagerService(),
       product: null
     };
   },
   created() {
-    this.csvReader.readCsvFile('../src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
+    this.fileManager.readCsvFile('../src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
       this.products = this.shuffleArray(data);
       const productId = parseInt(this.$route.params.id);
       this.product = this.products.find(product => product.id === productId);

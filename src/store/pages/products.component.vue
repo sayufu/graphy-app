@@ -1,8 +1,8 @@
 <script>
 import Papa from 'papaparse';
 import ProductCard from "../components/product-card.component.vue";
-import {CsvReadingService} from "../../shared/services/csv-reading.service.js";
-import LoadingSpinner from "../../shared/components/LoadingSpinner.component.vue";
+import {FileManagerService} from "../../shared/services/file-manager.service.js";
+import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
 
 export default {
   name: 'ProductsComponent',
@@ -14,11 +14,11 @@ export default {
       products: [],
       currentPage: 1,
       itemsPerPage: 12,
-      csvReader: new CsvReadingService()
+      fileManager: new FileManagerService()
     };
   },
   created() {
-    this.csvReader.readCsvFile('src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
+    this.fileManager.readCsvFile('src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
       this.products = this.shuffleArray(data);
     });
   },

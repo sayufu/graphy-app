@@ -1,10 +1,10 @@
-import { CsvReadingService } from "../../shared/services/csv-reading.service.js";
+import { FileManagerService } from "../../shared/services/file-manager.service.js";
 
 export class AuthenticationService {
     constructor() {
         this.users = [];
         this.csvFilePath = 'src/shared/data/USER_DATA.csv';
-        this.csvReadingService = new CsvReadingService();
+        this.csvReadingService = new FileManagerService();
 
         this.csvReadingService.readCsvFile(this.csvFilePath)
             .then((data) => {
