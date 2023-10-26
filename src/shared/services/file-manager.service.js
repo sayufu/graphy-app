@@ -28,6 +28,7 @@ export class FileManagerService {
             return Promise.reject(error);
         }
     }
+    /*
     async writeTxtFile(data, txtFilePath) {
         try {
             const fileWriter = new FileWriter();
@@ -57,4 +58,5 @@ export class FileManagerService {
             return Promise.reject(error);
         }
     }
+    */
 }
