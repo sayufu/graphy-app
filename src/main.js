@@ -29,6 +29,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Tag from 'primevue/tag';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Dialog from 'primevue/dialog';
 
 createApp(App)
     .use(PrimeVue, { ripple: true })
@@ -47,4 +48,5 @@ createApp(App)
     .component('Toast', Toast)
     .component('ProgressSpinner', ProgressSpinner)
     .component('Tag', Tag)
+    .component('Dialog', Dialog)
     .mount('#app')

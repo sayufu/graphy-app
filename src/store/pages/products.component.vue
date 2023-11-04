@@ -30,7 +30,6 @@ export default {
       }
       return products;
     },
-
     calculateCurrentPageItems() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;

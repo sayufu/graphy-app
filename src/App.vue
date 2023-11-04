@@ -62,7 +62,7 @@ export default {
       </router-link>
       <div class="flex gap-6 items-center">
         <div v-if="user" class="text-lg hidden sm:flex">
-          Welcome back, <span class="text-primary font-black">{{ user.first_name }}</span>
+          Welcome back,&nbsp;<span class="text-primary font-black">{{ user.first_name }}</span>
         </div>
         <router-link v-if="user" to="/login" class="btn-fill hidden sm:flex" @click.native.prevent="logout()">
           Log out
