@@ -39,7 +39,7 @@ export default {
       this.errorMessage = '';
     },
     showCredentials(){
-      this.fileManager.readCsvFile('../../shared/data/USER_DATA.csv').then((data) => {
+      this.fileManager.readCsvFile('../src/shared/data/USER_DATA.csv').then((data) => {
         this.credentials = data;
       });
       this.credentialsDialog = true;
