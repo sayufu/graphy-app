@@ -12,22 +12,12 @@ import PageNotFoundComponent from "../shared/pages/page-not-found.component.vue"
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/home', name: 'Home', component: HomeComponent, meta: { requiresAuth: false }},
     { path: '/login', name: 'Log In', component: LoginComponent, meta: { requiresAuth: false }},
     { path: '/products', name: 'Products', component: ProductsComponent, meta: { requiresAuth: true }},
     { path: '/products/:id', name: 'Product', component: ProductDetails, meta: { requiresAuth: true }},
     { path: '/purchases', name: 'Purchases', component: PurchasesComponent, meta: { requiresAuth: true }},
-    {
-      path: '/',
-      redirect: (to) => {
-        if (to.meta.requiresAuth) {
-          return '/products';
-        } else {
-          return '/home';
-        }
-      },
-    },
-    { path: '/:notFound(.*)', name: 'Page Not Found', component: PageNotFoundComponent, meta: { requiresAuth: true } },
+    { path: '/:pathMatch(.*)*', name: 'Page Not Found', component: PageNotFoundComponent, meta: { requiresAuth: true } },
+    { path: '/', redirect: '/products' },
   ]
 });
 
@@ -36,14 +26,8 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
     next('/login');
-  } else if (!to.meta.requiresAuth && userStore.isAuthenticated) {
-    next('/products');
   } else {
-    if (to.name === 'Page Not Found') {
-      next('/login');
-    } else {
-      next();
-    }
+    next();
   }
 });
 

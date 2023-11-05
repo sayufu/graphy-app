@@ -1,8 +1,10 @@
 <script>
 import {AuthenticationService} from "./authentication/services/authenticationService.service.js";
 import {useUserStore} from "./authentication/services/user-store.store.js";
+import LoadingSpinner from "./shared/components/loading-spinner.component.vue";
 
 export default {
+  components: {LoadingSpinner},
   data() {
     return {
       visibleMobileBar: false,
@@ -12,6 +14,7 @@ export default {
       authApi: new AuthenticationService(),
       user: null,
       responsiveNavbarVisible: false,
+      aboutDialog: false
     }
   },
   setup() {
@@ -37,8 +40,11 @@ export default {
       userStore.logout();
       window.location.reload();
     },
-    showResponsiveNavbar(){
+    showResponsiveNavbar() {
       this.responsiveNavbarVisible = !this.responsiveNavbarVisible;
+    },
+    showAbout(){
+      this.aboutDialog = true;
     }
   },
   watch: {
@@ -61,6 +67,7 @@ export default {
              class="h-8 md:h-12 hover:scale-95 duration-200" />
       </router-link>
       <div class="flex gap-6 items-center">
+        <div v-if="!user" class="btn-fill hidden sm:flex" @click="showAbout">About</div>
         <div v-if="user" class="text-lg hidden sm:flex">
           Welcome back,&nbsp;<span class="text-primary font-black">{{ user.first_name }}</span>
         </div>
@@ -90,6 +97,18 @@ export default {
       Log out
     </router-link>
   </div>
+
+  <Dialog v-model:visible="aboutDialog" modal header="About"
+          :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+    <div class="flex flex-col gap-4 justify-center items-center">
+      <h2 class="text-primary md:text-4xl font-bold">Hi there!</h2>
+      <p class="text-xl md:text-md">In this university final project for an Algorithmic Complexity course, we have recreated a product's recommendation section usually found in real e-commerces using Prim's graph algorithm. We chose products and recommended them based on their category similarities.</p>
+      <div class="flex gap-4 justify-center items-center md:items-baseline md:justify-start">
+        <a id="github-link" href="https://github.com/sayufu/graphy-app" target="_blank"><button class="btn-fill">Github Repo</button></a>
+      </div>
+    </div>
+
+  </Dialog>
   <main>
     <router-view />
   </main>
