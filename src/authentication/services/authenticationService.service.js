@@ -3,7 +3,7 @@ import { FileManagerService } from "../../shared/services/file-manager.service.j
 export class AuthenticationService {
     constructor() {
         this.users = [];
-        this.csvFilePath = 'src/shared/data/USER_DATA.csv';
+        this.csvFilePath = 'USER_DATA.csv';
         this.csvReadingService = new FileManagerService();
 
         this.csvReadingService.readCsvFile(this.csvFilePath)
