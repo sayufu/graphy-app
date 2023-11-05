@@ -10,20 +10,12 @@ export default {
   data() {
     return {
       purchases: null,
-      products: null,
-      users:null,
       fileManager: new FileManagerService()
     };
   },
   created() {
     this.fileManager.readCsvFile('GRAPHY_PURCHASES.csv').then((data) => {
       this.purchases = data;
-    });
-    this.fileManager.readCsvFile('GRAPHY_PRODUCTS.csv').then((data) => {
-      this.products = data;
-    });
-    this.fileManager.readCsvFile('USER_DATA.csv').then((data) => {
-      this.users = data;
     });
   },
   methods: {

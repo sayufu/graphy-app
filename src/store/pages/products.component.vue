@@ -18,7 +18,7 @@ export default {
     };
   },
   created() {
-    this.fileManager.readCsvFile('GRAPHY_PRODUCTS.csv').then((data) => {
+    this.fileManager.readCsvFile('../GRAPHY_PRODUCTS.csv').then((data) => {
       this.products = this.shuffleArray(data);
     });
   },
