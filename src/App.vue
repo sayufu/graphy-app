@@ -35,7 +35,7 @@ export default {
     logout() {
       const userStore = useUserStore();
       userStore.logout();
-      location.reload();
+      window.location.reload();
     },
     showResponsiveNavbar(){
       this.responsiveNavbarVisible = !this.responsiveNavbarVisible;
@@ -64,7 +64,7 @@ export default {
         <div v-if="user" class="text-lg hidden sm:flex">
           Welcome back,&nbsp;<span class="text-primary font-black">{{ user.first_name }}</span>
         </div>
-        <router-link v-if="user" to="/login" class="btn-fill hidden sm:flex" @click.native.prevent="logout()">
+        <router-link v-if="user" to="/login" class="btn-fill hidden sm:flex" @click.native="logout()">
           Log out
         </router-link>
         <router-link v-if="user" to="/purchases" class="btn-fill hidden sm:flex">
