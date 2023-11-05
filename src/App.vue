@@ -33,9 +33,9 @@ export default {
       return this.authenticationPaths.has(path);
     },
     logout() {
-      location.reload();
       const userStore = useUserStore();
       userStore.logout();
+      location.reload();
     },
     showResponsiveNavbar(){
       this.responsiveNavbarVisible = !this.responsiveNavbarVisible;

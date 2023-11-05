@@ -17,7 +17,6 @@ const router = createRouter({
     { path: '/products', name: 'Products', component: ProductsComponent, meta: { requiresAuth: true }},
     { path: '/products/:id', name: 'Product', component: ProductDetails, meta: { requiresAuth: true }},
     { path: '/purchases', name: 'Purchases', component: PurchasesComponent, meta: { requiresAuth: true }},
-    { path: '/:notFound(.*)', name: 'Page Not Found', component: PageNotFoundComponent },
     {
       path: '/',
       redirect: (to) => {
@@ -28,6 +27,7 @@ const router = createRouter({
         }
       },
     },
+    { path: '/:notFound(.*)', name: 'Page Not Found', component: PageNotFoundComponent },
   ]
 });
 
