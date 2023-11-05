@@ -8,9 +8,6 @@ export default {
   data() {
     return {
       visibleMobileBar: false,
-      authenticationPaths: new Set([
-        "/login"
-      ]),
       authApi: new AuthenticationService(),
       user: null,
       responsiveNavbarVisible: false,
@@ -32,9 +29,6 @@ export default {
     this.user = JSON.parse(user);
   },
   methods: {
-    isAnAuthenticationPath(path) {
-      return this.authenticationPaths.has(path);
-    },
     logout() {
       const userStore = useUserStore();
       userStore.logout();
