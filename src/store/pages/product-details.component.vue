@@ -2,15 +2,22 @@
 import {FileManagerService} from "../../shared/services/file-manager.service.js";
 import ProductCard from "../components/product-card.component.vue";
 import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
+import {RecommendationsService} from "../../shared/services/recommendations.service.js";
 
 export default {
   name: 'ProductDetails',
   components: {ProductCard, LoadingSpinner},
   data() {
     return {
-      products: [],
       fileManager: new FileManagerService(),
-      product: null
+      recommendationsService: new RecommendationsService(),
+      products: [],
+      product: null,
+      recommendationsByProduct: null,
+      recommendationsByBrand: null,
+      currentPageByProducts: 1,
+      currentPageByBrand: 1,
+      itemsPerPage: 4,
     };
   },
   created() {
@@ -18,6 +25,16 @@ export default {
       this.products = this.shuffleArray(data);
       const productId = parseInt(this.$route.params.id);
       this.product = this.products.find(product => product.id === productId);
+
+      this.recommendationsService.getRecommendationsData(this.$route.params.id).then((response) => {
+        // Recommended products by product
+        const recommendedProductIds = response.data['productRecommendations'];
+        this.recommendationsByProduct = this.products.filter(product => recommendedProductIds.includes(product.id));
+
+        // Recommended products by brand
+        const recommendedBrandIds = response.data['brandRecommendations'];
+        this.recommendationsByBrand = this.products.filter(product => recommendedBrandIds.includes(product.id));
+      });
     });
   },
   methods: {
@@ -28,6 +45,15 @@ export default {
       }
       return products;
     },
+    reloadPage() {
+      window.location.reload();
+    },
+    calculateCurrentPageItems(items, currentPage) {
+      const startIndex = (currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      console.log(startIndex, endIndex)
+      return items.slice(startIndex, endIndex);
+    },
   },
 };
 </script>
@@ -35,7 +61,7 @@ export default {
 <template>
   <div class="container mx-auto">
     <div v-if="product">
-      <div class="grid gap-20">
+      <div class="grid gap-12 py-8">
         <div class="flex flex-wrap gap-2 md:gap-6 px-4">
           <Tag icon="pi pi-tag" severity="info">{{product.category}}</Tag>
           <Tag icon="pi pi-tag" severity="info">{{product.sub_category}}</Tag>
@@ -56,15 +82,58 @@ export default {
                     :loading="loading" @click="load" />
           </div>
         </div>
+
         <div class="grid gap-2 px-2 py-2">
           <h1 class="text-2xl font-bold text-primary">Details</h1>
           <p class="text-justify">{{product.description}}</p>
         </div>
+
         <div class="grid gap-2 px-2 py-2">
           <h1 class="text-2xl font-bold text-primary">Recommended products</h1>
+          <div v-if="this.recommendationsByProduct === null">
+            <div class="flex items-center justify-center">
+              <ProgressSpinner style="width: 40px; height: 40px" strokeWidth="2" fill="var(--surface-ground)"
+                               animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+            </div>
+          </div>
+          <div v-else-if="this.recommendationsByProduct.length === 0">
+            <p>No products to show</p>
+          </div>
+          <div v-else>
+            <div class="grid gap-4">
+              <div class="flex flex-wrap gap-8">
+                <ProductCard v-for="product in calculateCurrentPageItems(this.recommendationsByProduct, this.currentPageByProducts)" :key="product.id" :product="product" @click.native="reloadPage"/>
+              </div>
+              <div class="flex gap-4 justify-center">
+                <Button @click="currentPageByProducts -= 1" :disabled="currentPageByProducts === 1" icon="pi pi-angle-left" outlined severity="info" />
+                <Button @click="currentPageByProducts += 1" :disabled="currentPageByProducts === Math.ceil(this.recommendationsByProduct.length / itemsPerPage)" icon="pi pi-angle-right" outlined severity="info" />
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="grid gap-2 px-2 py-2">
           <h1 class="text-2xl font-bold text-primary">Recommended by {{ product.brand }}</h1>
+          <div v-if="this.recommendationsByBrand === null">
+            <div class="flex items-center justify-center">
+              <ProgressSpinner style="width: 40px; height: 40px" strokeWidth="2" fill="var(--surface-ground)"
+                               animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+            </div>
+          </div>
+          <div v-else-if="this.recommendationsByBrand.length === 0">
+            <p>No products to show</p>
+          </div>
+          <div v-else>
+            <div class="grid gap-4">
+              <div class="flex flex-wrap gap-8">
+                <ProductCard v-for="product in calculateCurrentPageItems(this.recommendationsByBrand, this.currentPageByBrand)" :key="product.id" :product="product" @click.native="reloadPage"/>
+              </div>
+              <div class="flex gap-4 justify-center">
+                <Button @click="currentPageByBrand -= 1" :disabled="currentPageByBrand === 1" icon="pi pi-angle-left" outlined severity="info" />
+                <Button @click="currentPageByBrand += 1" :disabled="currentPageByBrand === Math.ceil(this.recommendationsByBrand.length / itemsPerPage)" icon="pi pi-angle-right" outlined severity="info" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
