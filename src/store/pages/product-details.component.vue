@@ -21,7 +21,7 @@ export default {
     };
   },
   created() {
-    this.fileManager.readCsvFile('../src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
+    this.fileManager.readCsvFile('GRAPHY_PRODUCTS.csv').then((data) => {
       this.products = this.shuffleArray(data);
       const productId = parseInt(this.$route.params.id);
       this.product = this.products.find(product => product.id === productId);

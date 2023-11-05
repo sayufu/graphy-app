@@ -16,13 +16,13 @@ export default {
     };
   },
   created() {
-    this.fileManager.readCsvFile('../src/shared/data/GRAPHY_PURCHASES.csv').then((data) => {
+    this.fileManager.readCsvFile('GRAPHY_PURCHASES.csv').then((data) => {
       this.purchases = data;
     });
-    this.fileManager.readCsvFile('../src/shared/data/GRAPHY_PRODUCTS.csv').then((data) => {
+    this.fileManager.readCsvFile('GRAPHY_PRODUCTS.csv').then((data) => {
       this.products = data;
     });
-    this.fileManager.readCsvFile('../src/shared/data/USER_DATA.csv').then((data) => {
+    this.fileManager.readCsvFile('USER_DATA.csv').then((data) => {
       this.users = data;
     });
   },
