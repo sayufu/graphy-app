@@ -77,7 +77,7 @@ export default {
                  class="text-center font-medium text-xl py-4 hover:bg-primary hover:text-white duration-200 border">
       Purchases
     </router-link>
-    <router-link v-if="user" to="/login" @click.native.prevent="logout()"
+    <router-link v-if="user" to="/login" @click.native.prevent="logout"
                  class="text-center font-medium text-xl py-4 hover:bg-primary hover:text-white duration-200 border">
       Log out
     </router-link>

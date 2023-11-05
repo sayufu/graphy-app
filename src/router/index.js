@@ -10,7 +10,6 @@ import PageNotFoundComponent from "../shared/pages/page-not-found.component.vue"
 
 const router = createRouter({
   history: createWebHistory(),
-  base: '/',
   routes: [
     { path: '/login', name: 'Log In', component: LoginComponent, meta: { requiresAuth: false }},
     { path: '/products', name: 'Products', component: ProductsComponent, meta: { requiresAuth: true }},
