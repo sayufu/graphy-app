@@ -47,15 +47,6 @@ export default {
       this.aboutDialog = true;
     }
   },
-  watch: {
-    $route(to, from) {
-      if (!this.user && !this.isAnAuthenticationPath(to.path)) {
-        const user = localStorage.getItem("user");
-        user && this.setUser(JSON.parse(user));
-        this.user = JSON.parse(user);
-      }
-    },
-  }
 }
 </script>
 
