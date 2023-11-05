@@ -56,7 +56,7 @@ export default {
 <template>
   <div class="grid md:flex items-center md:text-justify h-screen overflow-hidden">
     <div class="hidden md:block md:w-1/2 w-full">
-      <img class="w-auto rounded" src="src/assets/login-image.webp" alt="Hero image">
+      <img class="w-auto rounded" src="../../assets/login-image.webp" alt="Hero image">
     </div>
     <div class="grid gap-8 justify-center p-8 md:w-1/2">
       <form @submit.prevent="login" class="grid gap-8">

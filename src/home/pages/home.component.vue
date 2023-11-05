@@ -17,7 +17,7 @@ export default {
         </div>
       </div>
       <div class="flex md:place-content-end md:pt-6">
-        <img class="w-full h-auto rounded" src="src/assets/hero-image.webp" alt="Hero image">
+        <img class="w-full h-auto rounded" src="../../assets/hero-image.webp" alt="Hero image">
       </div>
     </div>
   </div>
