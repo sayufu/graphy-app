@@ -27,18 +27,23 @@ const router = createRouter({
         }
       },
     },
-    { path: '/:notFound(.*)', name: 'Page Not Found', component: PageNotFoundComponent },
+    { path: '/:notFound(.*)', name: 'Page Not Found', component: PageNotFoundComponent, meta: { requiresAuth: true } },
   ]
 });
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
     next('/login');
   } else if (!to.meta.requiresAuth && userStore.isAuthenticated) {
     next('/products');
   } else {
-    next();
+    if (to.name === 'Page Not Found') {
+      next('/login');
+    } else {
+      next();
+    }
   }
 });
 
