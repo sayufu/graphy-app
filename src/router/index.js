@@ -22,12 +22,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
     next('/login');
+  } else if (to.path === '/login' && userStore.isAuthenticated) {
+    next('/products');
   } else {
     next();
   }
 });
+
 
 
 export default router;
