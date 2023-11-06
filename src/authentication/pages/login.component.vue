@@ -33,7 +33,6 @@ export default {
         this.setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
         this.$router.push("/products");
-        window.location.reload();
       }).catch(err => {this.errorMessage = 'Incorrect username or password';})
     },
     resetErrorMessage() {

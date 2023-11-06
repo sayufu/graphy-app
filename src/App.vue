@@ -9,7 +9,6 @@ export default {
     return {
       visibleMobileBar: false,
       authApi: new AuthenticationService(),
-      user: null,
       responsiveNavbarVisible: false,
       aboutDialog: false
     }
@@ -26,13 +25,11 @@ export default {
   created() {
     const user = localStorage.getItem("user");
     user && this.setUser(JSON.parse(user));
-    this.user = JSON.parse(user);
   },
   methods: {
     logout() {
       const userStore = useUserStore();
       userStore.logout();
-      window.location.reload();
     },
     showResponsiveNavbar() {
       this.responsiveNavbarVisible = !this.responsiveNavbarVisible;
@@ -40,6 +37,14 @@ export default {
     showAbout(){
       this.aboutDialog = true;
     }
+  },
+  computed: {
+    user() {
+      return useUserStore().user;
+    },
+    isAuthenticated() {
+      return useUserStore().isAuthenticated;
+    },
   },
 }
 </script>
@@ -56,18 +61,18 @@ export default {
         <div v-if="user" class="text-lg hidden sm:flex">
           Welcome back,&nbsp;<span class="text-primary font-black">{{ user.first_name }}</span>
         </div>
-        <router-link v-if="user" to="/login" class="btn-fill hidden sm:flex" @click.native="logout()">
+        <router-link v-if="user && isAuthenticated" to="/login" class="btn-fill hidden sm:flex" @click.native="logout()">
           Log out
         </router-link>
-        <router-link v-if="user" to="/purchases" class="btn-fill hidden sm:flex">
+        <router-link v-if="user && isAuthenticated" to="/purchases" class="btn-fill hidden sm:flex">
           Purchases
         </router-link>
         <div class="inline-block md:hidden">
-          <i v-if="user" class="pi pi-align-justify hover:cursor-pointer" style="font-size: 2rem" @click="showResponsiveNavbar()"/>
+          <i v-if="user && isAuthenticated" class="pi pi-align-justify hover:cursor-pointer" style="font-size: 2rem" @click="showResponsiveNavbar()"/>
         </div>
       </div>
     </div>
-    <div v-if="user" class="text-lg sm:hidden">
+    <div v-if="user && isAuthenticated" class="text-lg sm:hidden">
       Welcome back, <span class="text-primary font-black">{{ user.first_name }}</span>
     </div>
   </nav>
