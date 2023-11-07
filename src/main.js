@@ -30,6 +30,7 @@ import Tag from 'primevue/tag';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
+import Sidebar from 'primevue/sidebar';
 
 createApp(App)
     .use(PrimeVue, { ripple: true })
@@ -49,4 +50,5 @@ createApp(App)
     .component('ProgressSpinner', ProgressSpinner)
     .component('Tag', Tag)
     .component('Dialog', Dialog)
+    .component('Sidebar', Sidebar)
     .mount('#app')

@@ -10,7 +10,9 @@ export default {
       visibleMobileBar: false,
       authApi: new AuthenticationService(),
       responsiveNavbarVisible: false,
-      aboutDialog: false
+      aboutDialog: false,
+      signOutConfirmationDialog: false,
+      shoppingCart: false
     }
   },
   setup() {
@@ -61,14 +63,19 @@ export default {
         <div v-if="user" class="text-lg hidden sm:flex">
           Welcome back,&nbsp;<span class="text-primary font-black">{{ user.first_name }}</span>
         </div>
-        <router-link v-if="user && isAuthenticated" to="/login" class="btn-fill hidden sm:flex" @click.native="logout()">
-          Log out
-        </router-link>
-        <router-link v-if="user && isAuthenticated" to="/purchases" class="btn-fill hidden sm:flex">
-          Purchases
-        </router-link>
+        <div class="hidden sm:block">
+          <router-link v-if="user && isAuthenticated" to="/login" @click.native="logout()" class="mx-2">
+            <Button icon="pi pi-sign-out" rounded aria-label="Log out" severity="danger" @click="signOutConfirmationDialog=true"  />
+          </router-link>
+          <router-link v-if="user && isAuthenticated" to="/purchases" class="mx-2">
+            <Button icon="pi pi-history" rounded aria-label="Purchases" severity="info" />
+          </router-link>
+          <Button class="mx-2"
+                  v-if="user && isAuthenticated" icon="pi pi-shopping-cart" rounded aria-label="Shopping cart" severity="info"
+                  @click="shoppingCart=true" />
+        </div>
         <div class="inline-block md:hidden">
-          <i v-if="user && isAuthenticated" class="pi pi-align-justify hover:cursor-pointer" style="font-size: 2rem" @click="showResponsiveNavbar()"/>
+          <i v-if="user && isAuthenticated" class="pi pi-align-justify hover:cursor-pointer" style="font-size: 2rem" @click="showResponsiveNavbar"/>
         </div>
       </div>
     </div>
@@ -78,6 +85,9 @@ export default {
   </nav>
 
   <div id="responsive-navbar" class="grid w-full" :class="{ 'hidden': !responsiveNavbarVisible }">
+    <div v-if="user" class="text-center font-medium text-xl py-4 hover:bg-primary hover:text-white duration-200 border" @click="shoppingCart=true">
+      Shopping cart
+    </div>
     <router-link v-if="user" to="/purchases"
                  class="text-center font-medium text-xl py-4 hover:bg-primary hover:text-white duration-200 border">
       Purchases
@@ -97,8 +107,22 @@ export default {
         <a id="github-link" href="https://github.com/sayufu/graphy-app" target="_blank"><button class="btn-fill">Github Repo</button></a>
       </div>
     </div>
-
   </Dialog>
+  <Sidebar v-model:visible="shoppingCart" position="right">
+    <template #header>
+      <div class="flex align-items-center gap-2 mr-auto">
+        <span class="font-bold">Shopping cart</span>
+      </div>
+    </template>
+    <div class="grid justify-between">
+      <div>
+        Products
+      </div>
+      <div>
+        Total
+      </div>
+    </div>
+  </Sidebar>
   <main>
     <router-view />
   </main>

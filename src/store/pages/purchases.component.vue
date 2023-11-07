@@ -25,13 +25,17 @@ export default {
     getUserName(id){
       console.log("A");
       return this.users.find(user => user.id === id).first_name + " " + this.users.find(user => user.id === id).last_name;
-    }
+    },
   },
 }
 </script>
 
 <template>
   <div class="container mx-auto">
+    <div @click="$router.go(-1)"></div>
+    <Button class="my-4"
+            icon="pi pi-arrow-left" rounded aria-label="Back" severity="info"
+            @click="$router.go(-1)"/>
     <div v-if="purchases">
       <DataTable :value="this.purchases"
                  paginator :rows="20" :rowsPerPageOptions="[5, 10, 20, 50]"

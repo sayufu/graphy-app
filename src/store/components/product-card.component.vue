@@ -7,6 +7,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  method: {
+    addProductToCart() {
+
+    }
   }
 };
 </script>
@@ -37,7 +42,7 @@ export default {
             class="w-full"
             severity="info"
             type="button" label="Add to cart"
-            :loading="loading" @click="load" />
+            @click="addProductToCart" />
   </div>
 </template>
 
