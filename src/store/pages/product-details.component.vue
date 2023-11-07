@@ -60,6 +60,9 @@ export default {
 
 <template>
   <div class="container mx-auto">
+    <Button class="my-4"
+            icon="pi pi-arrow-left" rounded aria-label="Back" severity="info"
+            @click="$router.go(-1)"/>
     <div v-if="product">
       <div class="grid gap-12 py-8">
         <div class="flex flex-wrap gap-2 md:gap-6 px-4">
