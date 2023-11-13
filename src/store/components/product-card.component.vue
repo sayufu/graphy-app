@@ -1,4 +1,7 @@
 <script>
+import {userShoppingCartStore} from "../services/shopping-cart.store.js";
+import {useToast} from "primevue/usetoast";
+
 export default {
   name: 'ProductCard',
   components: {},
@@ -8,15 +11,27 @@ export default {
       required: true
     }
   },
-  method: {
-    addProductToCart() {
+  methods: {
+    addProductToCart(productId) {
+      const cartStore = userShoppingCartStore();
+      const storedProducts = cartStore.getProductIds()
+      cartStore.addProduct(productId)
 
+      this.$toast.add({
+        severity: 'success',
+        summary: 'Added a product to cart',
+        detail: `${this.product.product} has been added`,
+        icon: 'pi pi-cart-plus',
+        group: 'bl',
+        life: 2000
+      });
     }
   }
 };
 </script>
 
 <template>
+  <Toast />
   <div class="flex flex-col gap-8 justify-between px-6 py-10 border rounded h-[500px] w-[340px]">
     <router-link
         :to="'/products/' + product.id"
@@ -42,7 +57,7 @@ export default {
             class="w-full"
             severity="info"
             type="button" label="Add to cart"
-            @click="addProductToCart" />
+            @click="addProductToCart(product.id)" />
   </div>
 </template>
 

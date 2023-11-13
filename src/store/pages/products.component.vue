@@ -1,8 +1,8 @@
 <script>
 import Papa from 'papaparse';
 import ProductCard from "../components/product-card.component.vue";
-import {FileManagerService} from "../../shared/services/file-manager.service.js";
 import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
+import {HttpsService} from "../../shared/services/https.service.js";
 
 export default {
   name: 'ProductsComponent',
@@ -14,12 +14,12 @@ export default {
       products: [],
       currentPage: 1,
       itemsPerPage: 12,
-      fileManager: new FileManagerService()
+      httpService: new HttpsService()
     };
   },
   created() {
-    this.fileManager.readCsvFile('../GRAPHY_PRODUCTS.csv').then((data) => {
-      this.products = this.shuffleArray(data);
+    this.httpService.getAll('products').then((response) => {
+      this.products = this.shuffleArray(response.data);
     });
   },
   methods: {
@@ -44,7 +44,11 @@ export default {
     <div v-if="products">
       <div class="flex flex-col items-center gap-8 py-8">
         <div class="flex flex-wrap justify-center -mx-4 gap-10">
-          <ProductCard v-for="product in calculateCurrentPageItems()" :product="product" :key="product.id" />
+          <ProductCard
+              v-for="product in calculateCurrentPageItems()"
+              :product="product"
+              :key="product.id"
+          />
         </div>
         <div class="flex gap-4">
           <Button @click="currentPage -= 1" :disabled="currentPage === 1" icon="pi pi-angle-left" outlined severity="info" />

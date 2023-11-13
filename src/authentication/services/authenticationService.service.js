@@ -1,15 +1,13 @@
-import { FileManagerService } from "../../shared/services/file-manager.service.js";
+import {HttpsService} from "../../shared/services/https.service.js";
 
 export class AuthenticationService {
     constructor() {
         this.users = [];
-        this.csvFilePath = 'USER_DATA.csv';
-        this.csvReadingService = new FileManagerService();
+        this.httpService = new HttpsService();
 
-        this.csvReadingService.readCsvFile(this.csvFilePath)
-            .then((data) => {
-                this.users = data;
-            });
+        this.httpService.getAll('users').then((response) => {
+            this.users = response.data;
+        });
     }
 
     async signIn(username, password) {

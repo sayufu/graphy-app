@@ -1,15 +1,18 @@
 <script>
-import {FileManagerService} from "../../shared/services/file-manager.service.js";
 import ProductCard from "../components/product-card.component.vue";
 import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
 import {RecommendationsService} from "../../shared/services/recommendations.service.js";
+import {HttpsService} from "../../shared/services/https.service.js";
+import {userShoppingCartStore} from "../services/shopping-cart.store.js";
+import {useToast} from "primevue/usetoast";
+import Toast from "primevue/toast";
 
 export default {
   name: 'ProductDetails',
-  components: {ProductCard, LoadingSpinner},
+  components: {ProductCard, LoadingSpinner, Toast },
   data() {
     return {
-      fileManager: new FileManagerService(),
+      httpService: new HttpsService(),
       recommendationsService: new RecommendationsService(),
       products: [],
       product: null,
@@ -21,8 +24,8 @@ export default {
     };
   },
   created() {
-    this.fileManager.readCsvFile('../GRAPHY_PRODUCTS.csv').then((data) => {
-      this.products = this.shuffleArray(data);
+    this.httpService.getAll('products').then((response) => {
+      this.products = this.shuffleArray(response.data);
       const productId = parseInt(this.$route.params.id);
       this.product = this.products.find(product => product.id === productId);
 
@@ -54,15 +57,32 @@ export default {
       console.log(startIndex, endIndex)
       return items.slice(startIndex, endIndex);
     },
+    addProductToCart(productId) {
+      const cartStore = userShoppingCartStore();
+      const storedProducts = cartStore.getProductIds()
+      cartStore.addProduct(productId)
+
+      this.$toast.add({
+        severity: 'success',
+        summary: 'Added a product to cart',
+        detail: `${this.product.product} has been added`,
+        group: 'bl',
+        life: 2000
+      });
+    },
   },
 };
 </script>
 
 <template>
   <div class="container mx-auto">
-    <Button class="my-4"
-            icon="pi pi-arrow-left" rounded aria-label="Back" severity="info"
-            @click="$router.go(-1)"/>
+    <Toast />
+    <div class="flex gap-4 items-center">
+      <Button class="my-4"
+              icon="pi pi-arrow-left" rounded aria-label="Back" severity="info"
+              @click="$router.go(-1)"/>
+      <p class="text-2xl font-medium">Go back</p>
+    </div>
     <div v-if="product">
       <div class="grid gap-12 py-8">
         <div class="flex flex-wrap gap-2 md:gap-6 px-4">
@@ -82,7 +102,7 @@ export default {
                     class="w-full"
                     severity="info"
                     type="button" label="Add to cart"
-                    :loading="loading" @click="load" />
+                    @click="addProductToCart(product.id)" />
           </div>
         </div>
 

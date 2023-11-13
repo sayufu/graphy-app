@@ -2,8 +2,8 @@
 import {AuthenticationService} from "../services/authenticationService.service.js";
 import {useUserStore} from "../services/user-store.store.js";
 import { useToast } from 'primevue/usetoast';
-import {FileManagerService} from "../../shared/services/file-manager.service.js";
 import LoadingSpinner from "../../shared/components/loading-spinner.component.vue";
+import {HttpsService} from "../../shared/services/https.service.js";
 
 export default {
   name: 'LoginComponent',
@@ -14,7 +14,7 @@ export default {
       username: '',
       password: '',
       authApi: new AuthenticationService(),
-      fileManager: new FileManagerService(),
+      httpService: new HttpsService(),
       credentialsDialog: false,
       credentials: []
     }
