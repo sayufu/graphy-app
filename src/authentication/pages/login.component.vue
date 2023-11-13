@@ -39,8 +39,8 @@ export default {
       this.errorMessage = '';
     },
     showCredentials(){
-      this.fileManager.readCsvFile('USER_DATA.csv').then((data) => {
-        this.credentials = data;
+      this.httpService.getAll('users').then((response) => {
+        this.credentials = response.data;
       });
       this.credentialsDialog = true;
     },

@@ -19,7 +19,6 @@ export class AuthenticationService {
                 return Promise.reject(new Error("User not found or password is incorrect"));
             }
         } catch (error) {
-            console.error('Sign-in error:', error);
             return Promise.reject(error);
         }
     }
