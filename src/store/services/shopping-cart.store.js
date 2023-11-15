@@ -9,14 +9,16 @@ export const userShoppingCartStore = defineStore('shopping-cart', {
     actions: {
         getProductIds() {
             this.loadCartState();
-            return this.productIds;
+            return [...this.productIds];
         },
         addProduct(productId) {
-            this.productIds.push(productId);
+            this.productIds = [...this.productIds, productId];
             this.saveCartState();
         },
         deleteProduct(productId) {
-            this.productIds = this.productIds.filter(id => id !== productId);
+            let previousList = this.productIds;
+            let newList = previousList.filter(id => id !== productId);
+            this.productIds = newList;
             this.saveCartState();
         },
         clearCart() {
@@ -27,12 +29,17 @@ export const userShoppingCartStore = defineStore('shopping-cart', {
             const currentProductIds = this.productIds;
 
             if (JSON.stringify(currentProductIds) !== localStorage.getItem(CART_STORAGE_KEY)) {
-                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(this.productIds));
+                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(currentProductIds));
             }
         },
         loadCartState() {
             const storedCart = localStorage.getItem(CART_STORAGE_KEY);
-            this.productIds = storedCart ? JSON.parse(storedCart) : [];
+            if (storedCart) {
+              const parsedCart = JSON.parse(storedCart);
+              if (JSON.stringify(parsedCart) !== JSON.stringify(this.productIds)) {
+                this.productIds = parsedCart;
+              }
+            }
         },
     },
 });
