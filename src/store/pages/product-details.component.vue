@@ -125,7 +125,9 @@ export default {
           <div v-else>
             <div class="grid gap-4">
               <div class="flex flex-wrap gap-8">
-                <ProductCard v-for="product in calculateCurrentPageItems(this.recommendationsByProduct, this.currentPageByProducts)" :key="product.id" :product="product" @click.native="reloadPage"/>
+                <ProductCard v-for="product in calculateCurrentPageItems(this.recommendationsByProduct, this.currentPageByProducts)"
+                             :key="product.id"
+                             :product="product" />
               </div>
               <div class="flex gap-4 justify-center">
                 <Button @click="currentPageByProducts -= 1" :disabled="currentPageByProducts === 1" icon="pi pi-angle-left" outlined severity="info" />
@@ -149,7 +151,9 @@ export default {
           <div v-else>
             <div class="grid gap-4">
               <div class="flex flex-wrap gap-8">
-                <ProductCard v-for="product in calculateCurrentPageItems(this.recommendationsByBrand, this.currentPageByBrand)" :key="product.id" :product="product" @click.native="reloadPage"/>
+                <ProductCard v-for="product in calculateCurrentPageItems(this.recommendationsByBrand, this.currentPageByBrand)"
+                             :key="product.id"
+                             :product="product" />
               </div>
               <div class="flex gap-4 justify-center">
                 <Button @click="currentPageByBrand -= 1" :disabled="currentPageByBrand === 1" icon="pi pi-angle-left" outlined severity="info" />

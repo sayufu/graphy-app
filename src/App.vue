@@ -4,6 +4,7 @@ import {useUserStore} from "./authentication/services/user-store.store.js";
 import LoadingSpinner from "./shared/components/loading-spinner.component.vue";
 import {userShoppingCartStore} from "./store/services/shopping-cart.store.js";
 import {HttpsService} from "./shared/services/https.service.js";
+import {RecommendationsService} from "./shared/services/recommendations.service.js";
 
 export default {
   components: {LoadingSpinner},
@@ -11,6 +12,7 @@ export default {
     return {
       visibleMobileBar: false,
       authApi: new AuthenticationService(),
+      recommendationService: new RecommendationsService(),
       responsiveNavbarVisible: false,
       aboutDialog: false,
       signOutConfirmationDialog: false,
@@ -90,6 +92,12 @@ export default {
           group: 'bl',
           detail: 'Purchase completed successfully',
           life: 3000
+        });
+
+        this.recommendationService.addNewPurchaseToGraph().then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error);
         });
 
       }).catch((error) => {
@@ -229,6 +237,6 @@ export default {
   </Dialog>
 
   <main>
-    <router-view />
+    <router-view :key="$route.fullPath" />
   </main>
 </template>
