@@ -14,12 +14,15 @@ export default {
       currentPage: 1,
       itemsPerPage: 12,
       httpService: new HttpsService(),
-      searchTerm: ''
+      searchTerm: '',
+      categories: [], // Array to store unique categories
+      selectedCategory: null // Selected category for filtering
     };
   },
   created() {
     this.httpService.getAll('products').then((response) => {
       this.products = this.shuffleArray(response.data);
+      this.extractCategories();
     });
   },
   methods: {
@@ -30,6 +33,14 @@ export default {
       }
       return products;
     },
+    extractCategories() {
+      // Extract unique categories from products
+      const allCategories = this.products.flatMap(product => product.category || []);
+      this.categories = Array.from(new Set(allCategories));
+      // include an empty category for filtering that ios called All
+
+      this.categories.unshift('All');
+    },
     calculateCurrentPageItems() {
       const filteredProducts = this.filteredProducts();
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -38,15 +49,23 @@ export default {
     },
     filteredProducts() {
       const searchTerm = this.searchTerm.toLowerCase().trim();
+      const categoryFilter = this.selectedCategory;
 
       return this.products.filter(product => {
         const productName = (product.product || '').toLowerCase();
-        return productName.includes(searchTerm);
+        const productCategory = product.category || [];
+
+        const matchesSearch = productName.includes(searchTerm);
+
+        // if categoryFilter is null, then we want to return true for all products
+        const matchesCategory = categoryFilter === null || categoryFilter === 'All' || productCategory.includes(categoryFilter);
+
+        return matchesSearch && matchesCategory;
       });
     },
     handleSearch() {
       this.currentPage = 1; // Reset to the first page when searching
-    }
+    },
   },
 };
 </script>
@@ -54,8 +73,10 @@ export default {
 <template>
   <div class="container mx-auto">
     <div v-if="products.length > 0">
-      <div class="w-full my-4 px-8" >
+      <div class="flex items-center gap-4 my-4 px-8">
         <InputText v-model="searchTerm" @input="handleSearch" placeholder="Search for products" class="w-full" />
+        <Dropdown v-model="selectedCategory" :options="categories" optionLabel="" placeholder="Select a category"
+                  class="p-button-info p-button-outlined w-1/2 md:w-1/4" />
       </div>
       <div class="flex flex-col items-center gap-8 py-8">
         <div class="flex flex-wrap justify-center -mx-4 gap-10">
