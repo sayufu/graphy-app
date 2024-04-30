@@ -15,8 +15,8 @@ In this university final project for an Algorithmic Complexity course, we have r
 ## :question:About The Project
 
 <div align="center">
-  <a href="https://github.com/MoniTech-upc-pre-202302-cc238-wv61/Favore-Landing" target="_blank">
-    <img src="https://i.imgur.com/LZr1bRz.png" alt="Preview Landing" width="auto" height="500">
+  <a href="https://github.com/Medtech-Innovations/medmeet-landing" target="_blank">
+    <img src="https://i.imgur.com/LZr1bRz.png" alt="Preview Landing" style="max-width: 100%; height: auto;">
   </a>
 </div>
 
