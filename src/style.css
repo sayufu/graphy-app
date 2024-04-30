@@ -27,21 +27,3 @@
         @apply text-lg border font-semibold;
     }
 }
-
-
-/* ===== Scrollbar CSS ===== */
-/* Firefox */
-* {
-    scrollbar-width: auto;
-    scrollbar-color: #ff6e75 #141516;
-}
-
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-    width: 16px;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: #656DC8;
-    border-radius: 10px;
-}
