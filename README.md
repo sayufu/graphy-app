@@ -15,7 +15,7 @@ In this university final project for an Algorithmic Complexity course, we have r
 ## :question:About The Project
 
 <div align="center">
-  <a href="https://github.com/Medtech-Innovations/medmeet-landing" target="_blank">
+  <a href="https://graphyupc.netlify.app/" target="_blank">
     <img src="https://i.imgur.com/LZr1bRz.png" alt="Preview Landing" style="max-width: 100%; height: auto;">
   </a>
 </div>
